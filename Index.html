@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abrir Orçamento</title>
+<style>
+  body{
+    margin:0;
+    background:#F4F6FA;
+    color:#1C2430;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    padding:16px;
+    box-sizing:border-box;
+  }
+  .card{
+    width:100%;
+    max-width:420px;
+    background:#FFFFFF;
+    border:1px solid #E1E5EB;
+    border-radius:16px;
+    padding:28px 24px;
+    box-sizing:border-box;
+    text-align:center;
+  }
+  .eyebrow{
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:#5B6472;
+    font-weight:600;
+    margin:0 0 6px;
+  }
+  h1{ font-size:20px; line-height:1.3; margin:0 0 8px; }
+  p.sub{ font-size:14px; color:#5B6472; margin:0 0 24px; line-height:1.5; }
+  button{
+    display:block;
+    width:100%;
+    padding:14px 18px;
+    font-size:15px;
+    font-weight:600;
+    color:#FFFFFF;
+    background:#C62828;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    box-sizing:border-box;
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <p class="eyebrow">MK Forros e Divisórias</p>
+    <h1>Abrir orçamento no app</h1>
+    <p class="sub">Toque no botão para preencher este orçamento direto no app da loja.</p>
+    <button id="openBtn" type="button">Abrir orçamento no app</button>
+  </div>
+
+  <script>
+    function buildAppUri(){
+      var params = new URLSearchParams(window.location.search);
+      var keys = ["cpf","nome","telefone","endereco","busca","obs","comodos"];
+      var parts = [];
+      keys.forEach(function(k){
+        var v = params.get(k);
+        if (v === null) v = "";
+        parts.push(k + "=" + encodeURIComponent(v));
+      });
+      return "mkforros://novoorcamento?" + parts.join("&");
+    }
+
+    var appUri = buildAppUri();
+    document.getElementById("openBtn").addEventListener("click", function(){
+      window.location.href = appUri;
+    });
+
+    setTimeout(function(){
+      window.location.href = appUri;
+    }, 400);
+  </script>
+</body>
+</html>
